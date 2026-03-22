@@ -15,7 +15,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package'
             }
         }
 
@@ -25,22 +25,16 @@ pipeline {
             }
         }
 
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-            }
-        }
-
         stage('Run Application') {
             steps {
-                sh 'nohup java -jar target/*.jar &'
+                sh 'java -jar target/MyMavenApp-1.0-SNAPSHOT.jar'
             }
         }
     }
 
     post {
         success {
-            echo 'Build, Test & Deployment successful!'
+            echo 'Build and deployment successful!'
         }
         failure {
             echo 'Build failed!'
