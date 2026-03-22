@@ -16,9 +16,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'echo JAVA_HOME=$JAVA_HOME'
-                sh 'java -version'
-                sh 'mvn clean package'
+                withEnv(["JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64"]) {
+                    sh '$JAVA_HOME/bin/java -version'
+                    sh '$JAVA_HOME/bin/mvn clean package'
             }
         }
 
